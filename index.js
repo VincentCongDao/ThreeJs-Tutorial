@@ -1,5 +1,5 @@
+import { OrbitControls } from "jsm/controls/OrbitControls.js";
 import * as THREE from "three";
-
 // Set height and weight
 const w = window.innerWidth;
 const h = window.innerHeight;
@@ -17,6 +17,12 @@ const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
 camera.position.z = 2;
 
 const scene = new THREE.Scene();
+
+// Using OrbitControls
+// OrbitControls allow user to control the canvas for the models
+const controls = new OrbitControls(camera, render.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.03;
 
 const geo = new THREE.IcosahedronGeometry(1.0, 3);
 const mat = new THREE.MeshStandardMaterial({
@@ -37,8 +43,9 @@ const hemiLight = new THREE.HemisphereLight(0xffff, 0xaa5500);
 scene.add(hemiLight);
 function animate(t = 0) {
 	requestAnimationFrame(animate);
-	mesh.rotation.y = t * 0.0001;
+	// mesh.rotation.y = t * 0.0001;
 	renderer.render(scene, camera);
+	controls.update;
 }
 
 animate();
